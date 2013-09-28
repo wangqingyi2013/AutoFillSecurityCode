@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">
+		<encoder>
+			<pattern>[%thread] %-5level %logger{10} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<!-- <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n
+			</pattern>
+		</encoder>
+	</appender> -->
+	<!-- Create a file appender for a log in the application's data directory -->
+	<property name="LOG_DIR" value="/sdcard/PandaBus" />
+	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_DIR}/pandabus.log</file>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">   
+      		<maxFileSize>5MB</maxFileSize>   
+    	</triggeringPolicy> 
+    	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      		<fileNamePattern>${LOG_DIR}/pandabus.%d.log</fileNamePattern>
+      <!-- keep 7 days' worth of history -->
+      		<maxHistory>7</maxHistory>
+    	</rollingPolicy> 
+		<encoder>
+			<pattern>%-4relative %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Write INFO (and higher-level) messages to the log file -->
+	<root level="DEBUG">
+		<!-- <appender-ref ref="file" /> -->
+		<appender-ref ref="logcat" />
+	</root>
+	<!-- <root level="DEBUG"> <appender-ref ref="STDOUT" /> </root> -->
+</configuration>
